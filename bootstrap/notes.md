@@ -4,18 +4,18 @@ Orchestration to start a docker container with all the necessary tooling setup a
 ## Bootstrapping SOPS and AGE with a Docker container 
 1. Change directory `cd path\to\bootstrap` folder where these notes are stored
 
-2. Build image using the Dockerfile `docker build --no-cache -t ubuntu-sops .`
+2. Build image using the Dockerfile `docker build --no-cache -t sopsage .`
 
 3. Create a container from the image
 
 ```
-docker run -it --rm --name=docker-sops -v G:\tmp\sops-keys\key.txt:/sops-keys/key.txt -v G:\tmp\sops-data:/sops-data ubuntu-sops
+docker run -it --rm --name=sopsage -v G:\tmp\sopsage-keys:/sopsage-keys -v G:\tmp\sopsage-data:/sopsage-data sopsage
 ```
 4. Starting the container should bring up an bash command prompt. 
 
-5. Run `sops /sops-data/sample.enc.env` at bash prompt. It should open a decrypted version of the sample in nano.
+5. Run `sops /sopsage-data/sample.enc.env` at bash prompt. It should open a decrypted version of the sample in nano.
 
-6. To confirm that the sample is encrypted run `cat /sops-data/sample.enc.env`. All the sensitive values should be encrypted
+6. To confirm that the sample is encrypted run `cat /sopsage-data/sample.enc.env`. All the sensitive values should be encrypted
 
 
 

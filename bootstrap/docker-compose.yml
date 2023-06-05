@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  test-db-cli:
+    container_name: test-db-cli
+    build: "."
+    image: test-db-cli
+    stdin_open: true
+    tty: true
+    networks:
+      - db-network
+
+networks:
+ db-network:
+  name: mysql-setup_test-db-net
+  external: true
