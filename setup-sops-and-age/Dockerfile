@@ -11,6 +11,8 @@ RUN apt -y install age
 RUN curl -Lo sops.deb "https://github.com/mozilla/sops/releases/latest/download/sops_3.7.3_amd64.deb"
 RUN apt --fix-broken install ./sops.deb
 RUN rm -rf sops.deb
-ENV SOPS_AGE_KEY_FILE=/sopsage-keys/key.txt
 ENV EDITOR=nano
+#ENV SOPS_AGE_KEY_FILE=/sopsage-keys/key.txt
+ENV SOPS_AGE_KEY_FILE=/sopsage/configs/age-key.private
+COPY ./scripts /scripts
 ENTRYPOINT ["/bin/bash"]

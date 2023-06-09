@@ -1,0 +1,36 @@
+name: deploy-sopsage-container
+
+on:
+# Trigger workflow manually
+ workflow_dispatch: 
+
+jobs:
+
+  sftp-artifacts-to-remote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      #  Check out the sftp-to-remote action
+      - uses: mp30028/sopsage/.github/actions/sftp-to-remote@main
+        with:
+          remote_username: ${{ secrets.REMOTE_USERNAME  }}
+          remote_host: ${{ secrets.REMOTE_SERVER  }}
+          remote_port: ${{ secrets.REMOTE_PORT  }}
+          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
+          local_filepath: ./setup-sops-and-age
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}
+          
+#  generate-key-pair:
+#
+#    runs-on: ubuntu-latest
+#    needs: [sftp-artifacts-to-remote]
+#    steps:      
+#      - uses: mp30028/sopsage-tmp/.github/actions/execute-remote-command@main
+#        with:
+#          remote_username: ${{ secrets.REMOTE_USERNAME  }}
+#          remote_host: ${{ secrets.REMOTE_SERVER  }}
+#          remote_port: ${{ secrets.REMOTE_PORT  }}
+#          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
+#          remote_cmd: ${{ vars.REMOTE_FILEPATH  }}/setup-sops-and-age/generate-key-pair.sh
