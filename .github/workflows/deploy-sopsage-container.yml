@@ -11,6 +11,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
       - uses: mp30028/sopsage/.github/actions/sftp-to-remote@main
         with:
           remote_username: ${{ secrets.REMOTE_USERNAME  }}
