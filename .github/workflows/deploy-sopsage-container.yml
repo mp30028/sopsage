@@ -6,13 +6,11 @@ on:
 
 jobs:
 
-  sftp-artifacts-to-remote:
+  sftp-setup-folder-to-remote:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-
-      #  Check out the sftp-to-remote action
       - uses: mp30028/sopsage/.github/actions/sftp-to-remote@main
         with:
           remote_username: ${{ secrets.REMOTE_USERNAME  }}
@@ -20,7 +18,21 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./setup-sops-and-age
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
+          
+  sftp-configs-folder-to-remote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mp30028/sopsage/.github/actions/sftp-to-remote@main
+        with:
+          remote_username: ${{ secrets.REMOTE_USERNAME  }}
+          remote_host: ${{ secrets.REMOTE_SERVER  }}
+          remote_port: ${{ secrets.REMOTE_PORT  }}
+          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
+          local_filepath: ./_configs/dev-server-1
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage          
           
 #  generate-key-pair:
 #
