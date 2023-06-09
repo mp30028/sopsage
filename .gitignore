@@ -1,8 +1,16 @@
 ##############################
+## keys
+##############################
+*.private
+!_configs/defaults/*.private
+
+##############################
 ## environment variables
 ##############################
 .env.*
 .env
+!_configs/defaults/.env
+!_configs/defaults/.env.*
 
 ##############################
 ## drawio
