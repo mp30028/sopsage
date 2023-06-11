@@ -24,7 +24,8 @@ echo "SOPS_COMMAND = ${SOPS_COMMAND}"
 
 ENCRYPTED_FILE="${DIRECTORY_PATH}/${NAME_PART}.enc.${EXTENSION}"
 
-sops --encrypt --age $(cat /sopsage/configs/age-key.public) $SOPS_COMMAND $FULL_FILEPATH > $ENCRYPTED_FILE
+# sops --encrypt --age $(cat /sopsage/configs/age-key.public) $SOPS_COMMAND $FULL_FILEPATH > $ENCRYPTED_FILE
+sops --encrypt --age $(cat ${DIRECTORY_PATH}/age-key.public) $SOPS_COMMAND $FULL_FILEPATH > $ENCRYPTED_FILE
 
 # rm $FULL_FILEPATH
 
