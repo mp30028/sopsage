@@ -13,6 +13,6 @@ RUN apt --fix-broken install ./sops.deb
 RUN rm -rf sops.deb
 ENV EDITOR=nano
 #ENV SOPS_AGE_KEY_FILE=/sopsage-keys/key.txt
-ENV SOPS_AGE_KEY_FILE=/sopsage/configs/age-key.private
+#ENV SOPS_AGE_KEY_FILE=/sopsage/configs/age-key.private
 COPY ./scripts /scripts
 ENTRYPOINT ["/bin/bash"]
