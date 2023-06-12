@@ -1,1 +1,0 @@
-export SOPS_AGE_KEY_FILE=/sopsage/configs/dev-server-1/age-key.private
