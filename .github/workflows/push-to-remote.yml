@@ -49,7 +49,8 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          remote_cmd: cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose; rm -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
+          remote_cmd: cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose
+          # remote_cmd: cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose; rm -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
           
 #  generate-key-pair:
 #
