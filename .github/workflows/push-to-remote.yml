@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  sftp-compose-project:
+  sftp-compose-project-to-staging:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,9 +19,9 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./compose-sops-and-age
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
           
-  sftp-configs:
+  sftp-configs-to-staging:
     runs-on: ubuntu-latest
 
     steps:
@@ -33,9 +33,9 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./_configs
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
           
-  rename-remote-folders:
+  merge-staging-to-operational-folders:
     runs-on: ubuntu-latest
     needs: 
     - sftp-compose-project
@@ -49,7 +49,7 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          remote_cmd: mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose
+          remote_cmd: cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;cp -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose; rm -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
           
 #  generate-key-pair:
 #
