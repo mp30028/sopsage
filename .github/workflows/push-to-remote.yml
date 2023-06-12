@@ -1,4 +1,4 @@
-name: deploy-sopsage-container
+name: push-to-remote
 
 on:
 # Trigger workflow manually
@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  sftp-setup-folder-to-remote:
+  sftp-compose-project:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,7 @@ jobs:
           local_filepath: ./compose-sops-and-age
           remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
           
-  sftp-configs-folder-to-remote:
+  sftp-configs:
     runs-on: ubuntu-latest
 
     steps:
