@@ -49,8 +49,7 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          remote_cmd: mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs; \
-                      mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose
+          remote_cmd: mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose
           
 #  generate-key-pair:
 #
