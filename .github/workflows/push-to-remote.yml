@@ -1,4 +1,4 @@
-name: deploy-sopsage-container
+name: push-to-remote
 
 on:
 # Trigger workflow manually
@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  sftp-setup-folder-to-remote:
+  sftp-compose-project:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,10 +18,10 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          local_filepath: ./setup-sops-and-age
+          local_filepath: ./compose-sops-and-age
           remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
           
-  sftp-configs-folder-to-remote:
+  sftp-configs:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,6 +34,23 @@ jobs:
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./_configs
           remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
+          
+  rename-remote-folders:
+    runs-on: ubuntu-latest
+    needs: 
+    - sftp-compose-project
+    - sftp-configs
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mp30028/sopsage/.github/actions/execute-remote-command@main
+        with:
+          remote_username: ${{ secrets.REMOTE_USERNAME  }}
+          remote_host: ${{ secrets.REMOTE_SERVER  }}
+          remote_port: ${{ secrets.REMOTE_PORT  }}
+          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
+          remote_cmd: mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs; \
+                      mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose
           
 #  generate-key-pair:
 #
