@@ -9,7 +9,7 @@ services:
     tty: true
 
     volumes:
-     - ../_configs:/sopsage/configs
+     - ../configs:/sopsage/configs
 #     - ../_public-keys/${CONFIG_ID:-dev-server-1}:/sopsage/keys
 #     - ../_configs/${CONFIG_ID:-dev-server-1}:/sopsage/configs
 #    - ${KEYS_DIRECTORY:-../_public-keys/dev-server-1}:/sopsage-keys
