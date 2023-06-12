@@ -35,6 +35,23 @@ jobs:
           local_filepath: ./_configs
           remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
           
+  rename-remote-folders:
+    runs-on: ubuntu-latest
+    needs: 
+    - sftp-compose-project
+    - sftp-configs
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mp30028/sopsage/.github/actions/execute-remote-command@main
+        with:
+          remote_username: ${{ secrets.REMOTE_USERNAME  }}
+          remote_host: ${{ secrets.REMOTE_SERVER  }}
+          remote_port: ${{ secrets.REMOTE_PORT  }}
+          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
+          remote_cmd: mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/_configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs; \
+                      mv ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose-sops-and-age ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose
+          
 #  generate-key-pair:
 #
 #    runs-on: ubuntu-latest
