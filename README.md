@@ -1,6 +1,7 @@
 # sopsage
 Project to demonstrate an approach for managing security with SOPS, AGE, Docker and GitHub
 
+
 ### Approach
 
 
