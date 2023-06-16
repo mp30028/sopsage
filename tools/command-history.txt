@@ -1,0 +1,4 @@
+sh generate-keys.sh ../configs/dev-server-2 ../configs/dev-server-2
+source ~/.profile
+echo $SOPS_AGE_KEY_FILE
+sh ./encrypt-configs.sh ../configs/dev-server-2/.env ../configs/dev-server-2/age-key.public "{MYSQL_ROOT_PASSWORD|MYSQL_ROOT_PASSWORD|MYSQL_USER|MYSQL_PASSWORD|MYSQL_TCP_PORT}"

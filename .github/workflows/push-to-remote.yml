@@ -1,4 +1,4 @@
-name: push-to-remote
+name: push-sopsage-to-remote
 
 on:
 # Trigger workflow manually
@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  sftp-compose-project-to-staging:
+  sftp-tools-runner:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,10 +18,10 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          local_filepath: ./compose-sops-and-age
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
+          local_filepath: ./tools
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools
           
-  sftp-configs-to-staging:
+  sftp-configs:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,10 +32,10 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          local_filepath: ./_configs
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
+          local_filepath: ./configs
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs
 
-  sftp-tools-to-staging:
+  sftp-tools:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,27 +46,27 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          local_filepath: ./_tools
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
+          local_filepath: ./tools
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools
           
-  merge-staging-to-operational-folders:
-    runs-on: ubuntu-latest
-    needs: 
-    - sftp-compose-project-to-staging
-    - sftp-configs-to-staging
-    - sftp-tools-to-staging
-    
-    steps:
-      - uses: actions/checkout@v3
-      - uses: mp30028/sopsage/.github/actions/execute-remote-command@main
-        with:
-          remote_username: ${{ secrets.REMOTE_USERNAME  }}
-          remote_host: ${{ secrets.REMOTE_SERVER  }}
-          remote_port: ${{ secrets.REMOTE_PORT  }}
-          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          remote_cmd: |-
-            mkdir -p ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools;
-            cp -rfp ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_configs/* ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;
-            cp -rfp ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_tools/* ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools;
-            cp -rfp ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/compose-sops-and-age/* ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose;
-            rm -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging
+#  merge-staging-to-operational-folders:
+#    runs-on: ubuntu-latest
+#    needs: 
+#    - sftp-compose-project-to-staging
+#    - sftp-configs-to-staging
+#    - sftp-tools-to-staging
+#    
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: mp30028/sopsage/.github/actions/execute-remote-command@main
+#        with:
+#          remote_username: ${{ secrets.REMOTE_USERNAME  }}
+#          remote_host: ${{ secrets.REMOTE_SERVER  }}
+#          remote_port: ${{ secrets.REMOTE_PORT  }}
+#          remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
+#          remote_cmd: |-
+#            mkdir -p ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools;
+#            cp -rfp ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_configs/* ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs;
+#            cp -rfp ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/_tools/* ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools;
+#            cp -rfp ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging/compose-sops-and-age/* ${{ vars.REMOTE_FILEPATH  }}/sopsage/compose;
+#            rm -rf ${{ vars.REMOTE_FILEPATH  }}/sopsage/staging

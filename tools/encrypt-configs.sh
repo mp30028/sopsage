@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -eu
+
+CONFIG_FULL_FILEPATH="$1"
+PUBLIC_KEY_FILEPATH="$2"
+KEYS_TO_ENCRYPT="$3"
+CONFIG_FILENAME=$(basename -- "$CONFIG_FULL_FILEPATH")
+PUBLIC_KEY_FILENAME=$(basename -- "$PUBLIC_KEY_FILEPATH")
+
+CONFIG_FILE_DIRECTORY=$(dirname "$CONFIG_FULL_FILEPATH")
+
+CONFIG_FILE_EXTENSION="${CONFIG_FILENAME##*.}"
+CONFIG_FILE_NAME_PART="${CONFIG_FILENAME%.*}"
+
+
+docker cp ${CONFIG_FULL_FILEPATH} sopsage:/tmp/sopsage/work/${CONFIG_FILENAME}
+docker cp ${PUBLIC_KEY_FILEPATH} sopsage:/tmp/sopsage/work/${PUBLIC_KEY_FILENAME}
+docker exec -i sopsage sh /scripts/encrypt-configs.sh /tmp/sopsage/work/${CONFIG_FILENAME} /tmp/sopsage/work/${PUBLIC_KEY_FILENAME} ${KEYS_TO_ENCRYPT}
+docker cp sopsage:/tmp/sopsage/work/${CONFIG_FILE_NAME_PART}.enc.${CONFIG_FILE_EXTENSION} "${CONFIG_FILE_DIRECTORY}/${CONFIG_FILE_NAME_PART}.enc.${CONFIG_FILE_EXTENSION}"

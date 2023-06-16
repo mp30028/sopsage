@@ -6,7 +6,7 @@ Project to demonstrate an approach for managing security with SOPS, AGE, Docker 
 
 
 
-![approach](_docs/diagrams/01-approach.png)
+![approach](docs/diagrams/01-approach.png)
 
 
 #### 1. Setup and installation
