@@ -19,7 +19,7 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./runner
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/runner
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
           
   sftp-configs:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./configs
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/configs
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
 
   sftp-tools:
     runs-on: ubuntu-latest
@@ -47,7 +47,7 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./tools
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage
           
 #  merge-staging-to-operational-folders:
 #    runs-on: ubuntu-latest
