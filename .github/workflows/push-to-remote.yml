@@ -19,7 +19,7 @@ jobs:
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
           local_filepath: ./runner
-          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools
+          remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/runner
           
   sftp-configs:
     runs-on: ubuntu-latest
