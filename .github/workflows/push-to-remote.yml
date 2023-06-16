@@ -18,7 +18,7 @@ jobs:
           remote_host: ${{ secrets.REMOTE_SERVER  }}
           remote_port: ${{ secrets.REMOTE_PORT  }}
           remote_ssh_key: ${{ secrets.REMOTE_SSH_KEY  }}
-          local_filepath: ./tools
+          local_filepath: ./runner
           remote_filepath: ${{ vars.REMOTE_FILEPATH  }}/sopsage/tools
           
   sftp-configs:
