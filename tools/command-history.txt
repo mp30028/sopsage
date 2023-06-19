@@ -1,4 +1,24 @@
-sh generate-keys.sh ../configs/dev-server-2 ../configs/dev-server-2
+awk -F':' '{ print $1}' /etc/passwd
+userdel gitwfuser
+useradd gitwfuser
+passwd gitwfuser
+groups gitwfuser
+groupdel sopsage-key-readers
+
+-----------------------------------
+sudo mkdir -p /mnt/dev-volume-1/.secrets/sopsage/keys
+sudo groupadd sopsage-key-readers
+sudo getent group | grep sopsage
+sudo usermod -a -G sopsage-key-readers gitwfuser
+sudo chmod -R o-rwx /mnt/dev-volume-1/.secrets/
+sudo chown -R root:sopsage-key-readers /mnt/dev-volume-1/.secrets/
+nano ~/.bashrc and add 'export SOPS_AGE_KEY_FILE=/mnt/dev-volume-1/.secrets/sopsage/keys/age-key.private'
 source ~/.profile
 echo $SOPS_AGE_KEY_FILE
-sh ./encrypt-configs.sh ../configs/dev-server-2/.env ../configs/dev-server-2/age-key.public "{MYSQL_ROOT_PASSWORD|MYSQL_ROOT_PASSWORD|MYSQL_USER|MYSQL_PASSWORD|MYSQL_TCP_PORT}"
+
+sh ./generate-keys.sh "$SOPS_AGE_KEY_FILE" ../configs/dev-server-1
+sh ./encrypt-configs.sh ../configs/dev-server-1/.env ../configs/dev-server-1/age-key.public "MYSQL_ROOT_PASSWORD|MYSQL_USER|MYSQL_PASSWORD|MYSQL_TCP_PORT}"
+rm ../configs/dev-server-1/.env
+cat ../configs/dev-server-1/.enc.env
+sh ./decrypt-configs.sh ../configs/dev-server-1/.enc.env
+cat ../configs/dev-server-1/.env
